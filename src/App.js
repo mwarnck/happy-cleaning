@@ -1,14 +1,23 @@
 import './App.css';
 import Room from './Room.js';
+import Header from './Header.js';
 
-function App() {
+export default function App() {
   return (
     <main className="App">
-      <Room text="Küche" isClean />
-      <Room text="Wohnzimmer" isClean={false} />
-      <Room text="Bad" />
+      <Header>Happy Cleaning</Header>
+      <Room
+        text="Küche"
+        description="Herdplatten nicht vergessen"
+        isClean
+        isDescriptionVisable
+      />
+      <Room
+        text="Wohnzimmer"
+        description="Staubwischen auch auf dem Fensterbrett"
+        isDescriptionVisable
+      />
+      <Room text="Bad" description="Eigener Lappen für das Klo!" />
     </main>
   );
 }
-
-export default App;
