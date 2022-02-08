@@ -1,4 +1,5 @@
 import './Room.css';
+import styled from 'styled-components';
 
 export default function Room({
   text,
@@ -10,11 +11,22 @@ export default function Room({
     ? 'Room__status Room__status--clean'
     : 'Room__status Room__status--dirty';
   return (
-    <section className="Room">
-      <header className="Room__header">
+    <RoomContainer>
+      <header>
         {text} <div className={statusClassName}></div>
       </header>
       <p hidden={!isDescriptionVisable}>{description}</p>
-    </section>
+    </RoomContainer>
   );
 }
+
+const RoomContainer = styled.section`
+  padding: 12px;
+  border: 1px solid #ddd;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`;

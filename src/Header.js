@@ -1,5 +1,11 @@
-import './Header.css';
+//import './Header.css';
+import styled from 'styled-components';
 
 export default function Header({ children }) {
-  return <header className="Header">{children}</header>;
+  return <Heading>{children}</Heading>;
 }
+
+const Heading = styled.header`
+  text-align: center;
+  padding: 20px;
+`;
