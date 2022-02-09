@@ -26,29 +26,26 @@ export default function App() {
   return (
     <AppContainer>
       <Header>Happy Cleaning</Header>
-      {rooms.map(
-        ({ text, description, isDescriptionVisable, isClean }, index) => (
-          <Room
-            key={text}
-            text={text}
-            description={description}
-            isClean={isClean}
-            isDescriptionVisable={isDescriptionVisable}
-            toggleStatus={event => {
-              event.stopPropagation();
+      {rooms.map(({ text, description, isClean }, index) => (
+        <Room
+          key={text}
+          text={text}
+          description={description}
+          isClean={isClean}
+          toggleStatus={event => {
+            event.stopPropagation();
 
-              updateRooms(draft => {
-                draft[index].isClean = !isClean;
-              });
-              //setRooms([
-              //  ...rooms.slice(0, index),
-              //  { ...rooms[index], isClean: !isClean },
-              //  ...rooms.slice(index + 1),
-              //]);
-            }}
-          />
-        )
-      )}
+            updateRooms(draft => {
+              draft[index].isClean = !isClean;
+            });
+            //setRooms([
+            //  ...rooms.slice(0, index),
+            //  { ...rooms[index], isClean: !isClean },
+            //  ...rooms.slice(index + 1),
+            //]);
+          }}
+        />
+      ))}
     </AppContainer>
   );
 }
