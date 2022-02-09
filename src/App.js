@@ -2,40 +2,49 @@
 import Room from './Room.js';
 import Header from './Header.js';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 export default function App() {
-  const rooms = [
+  const [rooms, setRooms] = useState([
     {
       text: 'Küche',
       description: 'Herdplatten nicht vergessen!',
-      isDescriptionVisable: true,
       isClean: true,
     },
     {
       text: 'Wohnzimmer',
       description: 'Staubwischen auch auf dem Fensterbrett',
-      isDescriptionVisable: true,
       isClean: true,
     },
     {
       text: 'Bad',
       description: 'Eigener Lappen für das Klo!',
-      isDescriptionVisable: false,
       isClean: false,
     },
-  ];
+  ]);
+
   return (
     <AppContainer>
       <Header>Happy Cleaning</Header>
-      {rooms.map(({ text, description, isDescriptionVisable, isClean }) => (
-        <Room
-          key={text}
-          text={text}
-          description={description}
-          isClean={isClean}
-          isDescriptionVisable={isDescriptionVisable}
-        />
-      ))}
+      {rooms.map(
+        ({ text, description, isDescriptionVisable, isClean }, index) => (
+          <Room
+            key={text}
+            text={text}
+            description={description}
+            isClean={isClean}
+            isDescriptionVisable={isDescriptionVisable}
+            toggleStatus={event => {
+              event.stopPropagation();
+              setRooms([
+                ...rooms.slice(0, index),
+                { ...rooms[index], isClean: !isClean },
+                ...rooms.slice(index + 1),
+              ]);
+            }}
+          />
+        )
+      )}
     </AppContainer>
   );
 }
