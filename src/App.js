@@ -4,7 +4,8 @@ import Header from './Header.js';
 import Flatmate from './Flatmate.js';
 import styled from 'styled-components';
 import { useImmer } from 'use-immer';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Navigation from './Navigation.js';
 
 export default function App() {
   const [rooms, updateRooms] = useImmer(
@@ -38,6 +39,10 @@ export default function App() {
     loadFlatmates();
   }, []);
 
+  const [isRoomsVisable, setIsRoomsVisable] = useState(true);
+  const [isFlatmatesVisable, setIsFlatmatesVisable] = useState(false);
+  const [headContent, setHeadContent] = useState('Happy Cleaning');
+
   async function loadFlatmates() {
     try {
       const response = await fetch(
@@ -58,30 +63,40 @@ export default function App() {
     }
   }
 
-  console.log(flatmates.slice(0, 3));
-
   return (
     <AppContainer>
       {hasError && <p>Error: 404 - not found</p>}
-      <Header>Happy Cleaning</Header>
-      {rooms.map(({ text, description, isClean }, index) => (
-        <Room
-          key={text}
-          text={text}
-          description={description}
-          isClean={isClean}
-          toggleStatus={event => {
-            event.stopPropagation();
+      <Header>{headContent}</Header>
+      {isRoomsVisable &&
+        rooms.map(({ text, description, isClean }, index) => (
+          <Room
+            key={text}
+            text={text}
+            description={description}
+            isClean={isClean}
+            toggleStatus={event => {
+              event.stopPropagation();
 
-            updateRooms(draft => {
-              draft[index].isClean = !isClean;
-            });
-          }}
-        />
-      ))}
-      {flatmates.map(({ name, id }) => (
-        <Flatmate key={id} name={name} />
-      ))}
+              updateRooms(draft => {
+                draft[index].isClean = !isClean;
+              });
+            }}
+          />
+        ))}
+      {isFlatmatesVisable &&
+        flatmates.map(({ name, id }) => <Flatmate key={id} name={name} />)}
+      <Navigation
+        showFlatmatesClick={() => {
+          setIsRoomsVisable(false);
+          setIsFlatmatesVisable(true);
+          setHeadContent('Flatmates');
+        }}
+        showRoomsClick={() => {
+          setIsRoomsVisable(true);
+          setIsFlatmatesVisable(false);
+          setHeadContent('Happy Cleaning');
+        }}
+      />
     </AppContainer>
   );
 
