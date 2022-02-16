@@ -86,6 +86,8 @@ export default function App() {
       {isFlatmatesVisable &&
         flatmates.map(({ name, id }) => <Flatmate key={id} name={name} />)}
       <Navigation
+        isRoomsVisable={isRoomsVisable}
+        isFlatmatesVisable={isFlatmatesVisable}
         showFlatmatesClick={() => {
           setIsRoomsVisable(false);
           setIsFlatmatesVisable(true);

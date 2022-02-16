@@ -1,18 +1,18 @@
-import './Room.css';
+//import './Room.css';
 import styled from 'styled-components';
 import { useState } from 'react';
 
 export default function Room({ text, description, isClean, toggleStatus }) {
   const [isDescriptionVisable, setIsDescriptionVisable] = useState(false);
 
-  const statusClassName = isClean
-    ? 'Room__status Room__status--clean'
-    : 'Room__status Room__status--dirty';
   return (
     <RoomContainer onClick={toggleDescription}>
       <header>
         <h2>{text}</h2>
-        <button onClick={toggleStatus} className={statusClassName}></button>
+        <StatusButton
+          onClick={toggleStatus}
+          buttonStatus={isClean}
+        ></StatusButton>
       </header>
       <p hidden={!isDescriptionVisable}>{description}</p>
     </RoomContainer>
@@ -32,4 +32,12 @@ const RoomContainer = styled.section`
     justify-content: space-between;
     align-items: center;
   }
+`;
+
+const StatusButton = styled.button`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background-color: ${props => (props.buttonStatus ? 'green' : 'crimson')};
 `;
